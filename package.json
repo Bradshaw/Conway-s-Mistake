@@ -1,0 +1,15 @@
+{
+  "name": "conway",
+  "version": "1.0.0",
+  "description": "A bot that does Conway's Game of Life stuff",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Kevin \"Gaeel\" Bradshaw-Rodriguez <gaeel@nanoleptic.net> (https://nanoleptic.net/gaeel)",
+  "license": "ISC",
+  "dependencies": {
+    "cutebot": "0.0.3"
+  }
+}
