@@ -120,30 +120,37 @@ function s4() {
 }
 
 
-randomise();
 
 function step(){
   var looped = sim();
   if (looped){
-    bot.tweet("Loop detected\nRandomising state\nBegin sequence n°"+s4()+"."+s4());
-    randomise();
-    bot.tweet(conwaystring());
+    bot.tweet("Loop detected\nRandomising state\nBegin sequence n°"+s4()+"."+s4(), function(){
+      randomise();
+      bot.tweet(conwaystring(), function() {
+        setTimeout(step,1000*60*60);
+      });
+    });
   } else {
-    bot.tweet(conwaystring());
+    bot.tweet(conwaystring(), function() {
+      setTimeout(step,1000*60*60);
+    });
   }
-  
-  setTimeout(step,1000*60*60);
 }
 
-bot.tweet = function(status) {
+bot.tweet = function(status, cb) {
   this.client.post('statuses/update', {status: status},  function(error, tweet, response) {
     if(error) console.log(error);
-    console.log("Tweeted: "+status);  // Tweet body. 
+    console.log("Tweeted: "+status);  // Tweet body.
+    cb();
   });
 }
 
-bot.tweet("Server restarted\nRandomising state\nBegin sequence n°"+s4()+"."+s4());
-setTimeout(step, 5000);
+bot.tweet("Server restarted\nRandomising state\nBegin sequence n°"+s4()+"."+s4(),function() {
+  randomise();
+  bot.tweet(conwaystring(), function() {
+    setTimeout(step,1000*60*60);
+  });
+});
 
 
 
